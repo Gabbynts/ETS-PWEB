@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ETS Pemrogramman Web 2023</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <style>
+      @media screen and (min-width: 1000px) {
+        .col {
+          width: 31%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container justify-content-center" style="margin-top: 5rem">
+      <div id="listMovie" class="row" style="column-gap: 2rem; row-gap: 2rem">
+        <div
+          id="card"
+          class="card shadow col col-12"
+          colspan="4"
+          style="display: none; padding: 20px 15px 20px 15px"
+        >
+          <div class="card-body">
+            <div class="card-title d-flex" style="column-gap: 0.4rem">
+              <h5 class="title"></h5>
+              <h5 class="year"></h5>
+            </div>
+            <p class="card-text"></p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      let xhttp = new XMLHttpRequest();
+      const url = "http://it-its.id/api/books";
+      xhttp.open("GET", url);
+      xhttp.send();
+
+      xhttp.onload = function () {
+        const results = JSON.parse(xhttp.responseText);
+        console.log(results);
+
+        const ListMovie = document.getElementById("listMovie");
+        const card = document.getElementById("card");
+
+        results.forEach((item) => {
+          const cardItem = card.cloneNode(true);
+          cardItem.style.display = "block";
+
+          cardItem.querySelector(".title").textContent = item.title;
+          cardItem.querySelector(".year").textContent = `(${item.year})`;
+          cardItem.querySelector(".card-text").textContent = item.author;
+
+          ListMovie.appendChild(cardItem);
+        });
+      };
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
